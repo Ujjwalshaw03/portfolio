@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="VidGrab — Download videos from YouTube, Instagram, TikTok, Twitter, Facebook and more in 1080p and 4K quality. Fast, free, no watermark." />
+  <meta name="theme-color" content="#050510" />
+  <title>VidGrab — Download Videos in 4K & 1080p</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="downloader.css" />
+</head>
+<body>
+
+  <!-- ===== BACKGROUND EFFECTS ===== -->
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="bg-orb orb-a" aria-hidden="true"></div>
+  <div class="bg-orb orb-b" aria-hidden="true"></div>
+  <div class="bg-orb orb-c" aria-hidden="true"></div>
+
+  <!-- ===== NAV ===== -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo" id="logo-link">
+        <span class="logo-icon">▼</span>
+        VidGrab
+      </a>
+      <ul class="nav-links">
+        <li><a href="#platforms">Platforms</a></li>
+        <li><a href="#universal">Converter</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+      <a href="#universal" class="nav-cta" id="nav-cta-btn">Download Free</a>
+    </div>
+  </nav>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero" id="hero">
+    <div class="hero-content">
+      <div class="hero-badge" id="hero-badge">
+        <span class="badge-dot"></span>
+        Supports 1080p &amp; 4K Ultra HD
+      </div>
+      <h1 class="hero-title">
+        Download Any Video<br />
+        <span class="gradient-text">In Seconds.</span>
+      </h1>
+      <p class="hero-sub">
+        YouTube · Instagram · TikTok · Twitter/X · Facebook · Pinterest<br />
+        No watermarks. No sign-up. Crystal clear quality.
+      </p>
+
+      <!-- Universal Input -->
+      <div class="hero-input-wrap" id="hero-form">
+        <div class="input-group">
+          <div class="input-icon">🔗</div>
+          <input
+            type="url"
+            id="heroUrl"
+            class="url-input"
+            placeholder="Paste any video link here..."
+            autocomplete="off"
+            spellcheck="false"
+          />
+          <button class="paste-btn" id="heroPasteBtn" title="Paste from clipboard">📋</button>
+        </div>
+        <div class="quality-row">
+          <label class="quality-option">
+            <input type="radio" name="heroQuality" value="1080p" id="q-1080" checked />
+            <span class="quality-chip">🎬 1080p FHD</span>
+          </label>
+          <label class="quality-option">
+            <input type="radio" name="heroQuality" value="4k" id="q-4k" />
+            <span class="quality-chip">⚡ 4K Ultra HD</span>
+          </label>
+          <label class="quality-option">
+            <input type="radio" name="heroQuality" value="720p" id="q-720" />
+            <span class="quality-chip">📱 720p HD</span>
+          </label>
+          <label class="quality-option">
+            <input type="radio" name="heroQuality" value="mp3" id="q-mp3" />
+            <span class="quality-chip">🎵 MP3 Audio</span>
+          </label>
+        </div>
+        <button class="download-btn" id="heroDownloadBtn">
+          <span class="btn-text">⬇ Download Now</span>
+          <span class="btn-loader" style="display:none;">
+            <span class="spinner"></span> Processing...
+          </span>
+        </button>
+      </div>
+
+      <!-- Result area -->
+      <div class="result-area" id="heroResult" style="display:none;"></div>
+
+      <!-- Stats -->
+      <div class="hero-stats">
+        <div class="stat-item">
+          <strong>10M+</strong>
+          <span>Downloads</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <strong>6+</strong>
+          <span>Platforms</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <strong>4K</strong>
+          <span>Max Quality</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <strong>Free</strong>
+          <span>Forever</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Floating badges -->
+    <div class="float-badge fb-1" aria-hidden="true">
+      <span>▶</span> YouTube
+    </div>
+    <div class="float-badge fb-2" aria-hidden="true">
+      <span>📸</span> Instagram
+    </div>
+    <div class="float-badge fb-3" aria-hidden="true">
+      <span>🎵</span> TikTok
+    </div>
+    <div class="float-badge fb-4" aria-hidden="true">
+      <span>🐦</span> Twitter/X
+    </div>
+  </section>
+
+  <!-- ===== PLATFORM SECTIONS ===== -->
+  <section class="platforms section-pad" id="platforms">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">— Supported Platforms</span>
+        <h2 class="section-title">Download from<br /><em>any platform</em></h2>
+      </div>
+
+      <div class="platform-cards">
+
+        <!-- YouTube -->
+        <div class="platform-card" id="card-youtube">
+          <div class="pc-header">
+            <div class="pc-logo yt-logo">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </div>
+            <div class="pc-info">
+              <h3>YouTube</h3>
+              <span class="pc-badge">Most Popular</span>
+            </div>
+          </div>
+          <p class="pc-desc">Download YouTube videos, Shorts, and playlists in 4K, 1080p, 720p or extract MP3 audio.</p>
+          <div class="pc-qualities">
+            <span>4K UHD</span><span>1080p</span><span>720p</span><span>MP3</span>
+          </div>
+          <div class="pc-input-wrap">
+            <input type="url" class="pc-input" id="yt-url" placeholder="https://youtube.com/watch?v=..." />
+            <div class="pc-quality-select">
+              <select class="quality-select" id="yt-quality">
+                <option value="4k">4K UHD</option>
+                <option value="1080p" selected>1080p FHD</option>
+                <option value="720p">720p HD</option>
+                <option value="mp3">MP3 Audio</option>
+              </select>
+            </div>
+            <button class="pc-download-btn" id="yt-btn" data-platform="youtube" data-input="yt-url" data-quality="yt-quality">
+              ⬇ Download
+            </button>
+          </div>
+          <div class="pc-result" id="yt-result"></div>
+        </div>
+
+        <!-- Instagram -->
+        <div class="platform-card" id="card-instagram">
+          <div class="pc-header">
+            <div class="pc-logo ig-logo">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+            </div>
+            <div class="pc-info">
+              <h3>Instagram</h3>
+              <span class="pc-badge ig-badge">Reels & Stories</span>
+            </div>
+          </div>
+          <p class="pc-desc">Download Instagram Reels, Posts, Stories, and IGTV videos without watermark.</p>
+          <div class="pc-qualities">
+            <span>1080p</span><span>720p</span><span>Reel</span><span>Story</span>
+          </div>
+          <div class="pc-input-wrap">
+            <input type="url" class="pc-input" id="ig-url" placeholder="https://www.instagram.com/reel/..." />
+            <div class="pc-quality-select">
+              <select class="quality-select" id="ig-quality">
+                <option value="1080p" selected>1080p</option>
+                <option value="720p">720p</option>
+              </select>
+            </div>
+            <button class="pc-download-btn" id="ig-btn" data-platform="instagram" data-input="ig-url" data-quality="ig-quality">
+              ⬇ Download
+            </button>
+          </div>
+          <div class="pc-result" id="ig-result"></div>
+        </div>
+
+        <!-- TikTok -->
+        <div class="platform-card" id="card-tiktok">
+          <div class="pc-header">
+            <div class="pc-logo tt-logo">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+            </div>
+            <div class="pc-info">
+              <h3>TikTok</h3>
+              <span class="pc-badge tt-badge">No Watermark</span>
+            </div>
+          </div>
+          <p class="pc-desc">Download TikTok videos without the TikTok watermark. HD quality preserved.</p>
+          <div class="pc-qualities">
+            <span>1080p</span><span>720p</span><span>No Watermark</span>
+          </div>
+          <div class="pc-input-wrap">
+            <input type="url" class="pc-input" id="tt-url" placeholder="https://www.tiktok.com/@user/video/..." />
+            <div class="pc-quality-select">
+              <select class="quality-select" id="tt-quality">
+                <option value="1080p" selected>1080p</option>
+                <option value="720p">720p</option>
+              </select>
+            </div>
+            <button class="pc-download-btn" id="tt-btn" data-platform="tiktok" data-input="tt-url" data-quality="tt-quality">
+              ⬇ Download
+            </button>
+          </div>
+          <div class="pc-result" id="tt-result"></div>
+        </div>
+
+        <!-- Twitter/X -->
+        <div class="platform-card" id="card-twitter">
+          <div class="pc-header">
+            <div class="pc-logo tw-logo">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </div>
+            <div class="pc-info">
+              <h3>Twitter / X</h3>
+              <span class="pc-badge tw-badge">GIF & Video</span>
+            </div>
+          </div>
+          <p class="pc-desc">Save Twitter/X videos and GIFs instantly. Works with tweets, spaces clips.</p>
+          <div class="pc-qualities">
+            <span>1080p</span><span>720p</span><span>GIF</span>
+          </div>
+          <div class="pc-input-wrap">
+            <input type="url" class="pc-input" id="tw-url" placeholder="https://twitter.com/user/status/..." />
+            <div class="pc-quality-select">
+              <select class="quality-select" id="tw-quality">
+                <option value="1080p" selected>1080p</option>
+                <option value="720p">720p</option>
+              </select>
+            </div>
+            <button class="pc-download-btn" id="tw-btn" data-platform="twitter" data-input="tw-url" data-quality="tw-quality">
+              ⬇ Download
+            </button>
+          </div>
+          <div class="pc-result" id="tw-result"></div>
+        </div>
+
+        <!-- Facebook -->
+        <div class="platform-card" id="card-facebook">
+          <div class="pc-header">
+            <div class="pc-logo fb-logo">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </div>
+            <div class="pc-info">
+              <h3>Facebook</h3>
+              <span class="pc-badge fb-badge2">HD Video</span>
+            </div>
+          </div>
+          <p class="pc-desc">Download Facebook videos, Reels, and Watch content in Full HD quality.</p>
+          <div class="pc-qualities">
+            <span>1080p</span><span>720p</span><span>Reel</span>
+          </div>
+          <div class="pc-input-wrap">
+            <input type="url" class="pc-input" id="fb-url" placeholder="https://www.facebook.com/watch?v=..." />
+            <div class="pc-quality-select">
+              <select class="quality-select" id="fb-quality">
+                <option value="1080p" selected>1080p</option>
+                <option value="720p">720p</option>
+              </select>
+            </div>
+            <button class="pc-download-btn" id="fb-btn" data-platform="facebook" data-input="fb-url" data-quality="fb-quality">
+              ⬇ Download
+            </button>
+          </div>
+          <div class="pc-result" id="fb-result"></div>
+        </div>
+
+        <!-- Pinterest -->
+        <div class="platform-card" id="card-pinterest">
+          <div class="pc-header">
+            <div class="pc-logo pin-logo">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 0 1 .083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.632-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
+            </div>
+            <div class="pc-info">
+              <h3>Pinterest</h3>
+              <span class="pc-badge pin-badge">Video Pins</span>
+            </div>
+          </div>
+          <p class="pc-desc">Download Pinterest video pins and animated content in high quality.</p>
+          <div class="pc-qualities">
+            <span>1080p</span><span>720p</span><span>MP4</span>
+          </div>
+          <div class="pc-input-wrap">
+            <input type="url" class="pc-input" id="pin-url" placeholder="https://www.pinterest.com/pin/..." />
+            <div class="pc-quality-select">
+              <select class="quality-select" id="pin-quality">
+                <option value="1080p" selected>1080p</option>
+                <option value="720p">720p</option>
+              </select>
+            </div>
+            <button class="pc-download-btn" id="pin-btn" data-platform="pinterest" data-input="pin-url" data-quality="pin-quality">
+              ⬇ Download
+            </button>
+          </div>
+          <div class="pc-result" id="pin-result"></div>
+        </div>
+
+      </div><!-- /platform-cards -->
+    </div>
+  </section>
+
+  <!-- ===== UNIVERSAL CONVERTER ===== -->
+  <section class="universal section-pad" id="universal">
+    <div class="container">
+      <div class="universal-inner">
+        <div class="universal-text">
+          <span class="section-label">— Universal Converter</span>
+          <h2 class="section-title">Any Link.<br /><em>Any Platform.</em></h2>
+          <p class="univ-desc">
+            Don't know which section to use? Just paste any video link from
+            anywhere — we'll automatically detect the platform and download it
+            for you in your chosen quality.
+          </p>
+          <div class="supported-list">
+            <span>✓ YouTube</span>
+            <span>✓ Instagram</span>
+            <span>✓ TikTok</span>
+            <span>✓ Twitter/X</span>
+            <span>✓ Facebook</span>
+            <span>✓ Pinterest</span>
+            <span>✓ Vimeo</span>
+            <span>✓ Dailymotion</span>
+            <span>✓ Reddit</span>
+            <span>✓ LinkedIn</span>
+          </div>
+        </div>
+        <div class="universal-form" id="universal-form">
+          <div class="univ-label">Universal Video Downloader</div>
+          <div class="univ-input-wrap">
+            <span class="univ-input-icon">🌐</span>
+            <input type="url" id="univUrl" class="univ-input" placeholder="Paste any video link..." autocomplete="off" />
+            <button class="univ-paste-btn" id="univPasteBtn">📋 Paste</button>
+          </div>
+          <div class="univ-quality-grid">
+            <label class="univ-quality-card" id="uq-4k">
+              <input type="radio" name="univQuality" value="4k" />
+              <div class="uqc-inner">
+                <span class="uqc-icon">⚡</span>
+                <span class="uqc-label">4K Ultra HD</span>
+                <span class="uqc-sub">2160p · Best</span>
+              </div>
+            </label>
+            <label class="univ-quality-card selected" id="uq-1080">
+              <input type="radio" name="univQuality" value="1080p" checked />
+              <div class="uqc-inner">
+                <span class="uqc-icon">🎬</span>
+                <span class="uqc-label">Full HD</span>
+                <span class="uqc-sub">1080p · Popular</span>
+              </div>
+            </label>
+            <label class="univ-quality-card" id="uq-720">
+              <input type="radio" name="univQuality" value="720p" />
+              <div class="uqc-inner">
+                <span class="uqc-icon">📱</span>
+                <span class="uqc-label">HD</span>
+                <span class="uqc-sub">720p · Fast</span>
+              </div>
+            </label>
+            <label class="univ-quality-card" id="uq-mp3">
+              <input type="radio" name="univQuality" value="mp3" />
+              <div class="uqc-inner">
+                <span class="uqc-icon">🎵</span>
+                <span class="uqc-label">Audio Only</span>
+                <span class="uqc-sub">MP3 · Music</span>
+              </div>
+            </label>
+          </div>
+          <button class="univ-download-btn" id="univDownloadBtn">
+            <span class="btn-text">⬇ Download Video</span>
+            <span class="btn-loader" style="display:none;"><span class="spinner"></span> Fetching...</span>
+          </button>
+          <div class="univ-result" id="univResult"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FEATURES ===== -->
+  <section class="features section-pad" id="features">
+    <div class="container">
+      <div class="section-header centered">
+        <span class="section-label">— Why VidGrab</span>
+        <h2 class="section-title">Built for <em>speed</em><br />and quality</h2>
+      </div>
+      <div class="features-grid">
+        <div class="feat-card" id="feat-1">
+          <div class="feat-icon">⚡</div>
+          <h3>Lightning Fast</h3>
+          <p>Our servers process and deliver your video in seconds. No long waits or queues.</p>
+        </div>
+        <div class="feat-card" id="feat-2">
+          <div class="feat-icon">🔒</div>
+          <h3>100% Secure</h3>
+          <p>We never store your links or personal data. Every download is completely private.</p>
+        </div>
+        <div class="feat-card" id="feat-3">
+          <div class="feat-icon">💎</div>
+          <h3>Pristine Quality</h3>
+          <p>Download in the original quality — up to 4K Ultra HD — without any compression loss.</p>
+        </div>
+        <div class="feat-card" id="feat-4">
+          <div class="feat-icon">🚫</div>
+          <h3>No Watermarks</h3>
+          <p>TikTok, Instagram, Facebook — all downloaded clean without platform watermarks.</p>
+        </div>
+        <div class="feat-card" id="feat-5">
+          <div class="feat-icon">📱</div>
+          <h3>All Devices</h3>
+          <p>Works perfectly on desktop, tablet, and mobile. No app download required.</p>
+        </div>
+        <div class="feat-card" id="feat-6">
+          <div class="feat-icon">🆓</div>
+          <h3>Always Free</h3>
+          <p>No subscription, no registration, no hidden fees. Just paste, click, download.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== HOW IT WORKS ===== -->
+  <section class="how-it-works section-pad" id="how-it-works">
+    <div class="container">
+      <div class="section-header centered">
+        <span class="section-label">— Simple Process</span>
+        <h2 class="section-title">3 steps to<br /><em>download</em></h2>
+      </div>
+      <div class="steps-row">
+        <div class="step-card" id="step-c1">
+          <div class="step-num">01</div>
+          <div class="step-icon-big">🔗</div>
+          <h3>Copy the Link</h3>
+          <p>Go to your favourite platform and copy the video URL from the address bar or share button.</p>
+        </div>
+        <div class="step-arrow" aria-hidden="true">→</div>
+        <div class="step-card" id="step-c2">
+          <div class="step-num">02</div>
+          <div class="step-icon-big">📋</div>
+          <h3>Paste &amp; Choose</h3>
+          <p>Paste the link into VidGrab, select your desired quality — 1080p, 4K, or MP3.</p>
+        </div>
+        <div class="step-arrow" aria-hidden="true">→</div>
+        <div class="step-card" id="step-c3">
+          <div class="step-num">03</div>
+          <div class="step-icon-big">⬇</div>
+          <h3>Download &amp; Enjoy</h3>
+          <p>Click Download and your file will be ready in seconds. Save it directly to your device.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FAQ ===== -->
+  <section class="faq section-pad" id="faq">
+    <div class="container">
+      <div class="section-header centered">
+        <span class="section-label">— Questions</span>
+        <h2 class="section-title">Frequently Asked<br /><em>Questions</em></h2>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item" id="faq-1">
+          <button class="faq-q" aria-expanded="false">
+            Is VidGrab completely free?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">
+            <p>Yes! VidGrab is 100% free to use. No registration, no subscription, and no hidden fees. Simply paste a link and download.</p>
+          </div>
+        </div>
+        <div class="faq-item" id="faq-2">
+          <button class="faq-q" aria-expanded="false">
+            Can I download 4K videos from YouTube?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">
+            <p>Yes! VidGrab supports up to 4K Ultra HD (2160p) for YouTube. Simply select "4K Ultra HD" in the quality options before downloading.</p>
+          </div>
+        </div>
+        <div class="faq-item" id="faq-3">
+          <button class="faq-q" aria-expanded="false">
+            Can I download Instagram Reels without watermark?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">
+            <p>Absolutely! Instagram videos and Reels downloaded through VidGrab are completely watermark-free in their original quality.</p>
+          </div>
+        </div>
+        <div class="faq-item" id="faq-4">
+          <button class="faq-q" aria-expanded="false">
+            How do I extract MP3 audio from a video?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">
+            <p>Simply select the "MP3 Audio" quality option before clicking download. This works for YouTube, Instagram, TikTok, and more.</p>
+          </div>
+        </div>
+        <div class="faq-item" id="faq-5">
+          <button class="faq-q" aria-expanded="false">
+            Is it legal to download videos?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">
+            <p>VidGrab is designed for downloading videos for personal use only (offline viewing, backups of your own content). Always respect copyright laws and platform terms of service. Do not redistribute downloaded content commercially.</p>
+          </div>
+        </div>
+        <div class="faq-item" id="faq-6">
+          <button class="faq-q" aria-expanded="false">
+            Do you store my downloaded videos?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">
+            <p>No. VidGrab does not store any of your videos, URLs, or personal information. Everything is processed privately and temporarily.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <a href="#" class="footer-logo">
+            <span class="logo-icon">▼</span> VidGrab
+          </a>
+          <p>Fast, free video downloads from every major platform. No watermarks, no sign-up.</p>
+        </div>
+        <div class="footer-links-col">
+          <h4>Platforms</h4>
+          <ul>
+            <li><a href="#card-youtube">YouTube</a></li>
+            <li><a href="#card-instagram">Instagram</a></li>
+            <li><a href="#card-tiktok">TikTok</a></li>
+            <li><a href="#card-twitter">Twitter/X</a></li>
+            <li><a href="#card-facebook">Facebook</a></li>
+          </ul>
+        </div>
+        <div class="footer-links-col">
+          <h4>Tools</h4>
+          <ul>
+            <li><a href="#universal">Universal Downloader</a></li>
+            <li><a href="#hero">4K Downloader</a></li>
+            <li><a href="#hero">MP3 Extractor</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 VidGrab. For personal use only. Respect copyright laws.</p>
+        <p>Download responsibly.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== TOAST NOTIFICATION ===== -->
+  <div class="toast" id="toast" aria-live="polite"></div>
+
+  <script src="downloader.js"></script>
+</body>
+</html>

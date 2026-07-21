@@ -49,6 +49,7 @@ navLinks.querySelectorAll('a').forEach(a => {
 // SCROLL REVEAL — IntersectionObserver
 // ----------------------------------------
 const revealEls = document.querySelectorAll([
+  '.credibility-card',
   '.about-grid',
   '.stat-card',
   '.svc-card',
@@ -92,6 +93,7 @@ function staggerReveal(parentSelector, childDelay = 80) {
     });
   });
 }
+staggerReveal('.credibility-grid', 100);
 staggerReveal('.services-grid', 90);
 staggerReveal('.tools-badges', 60);
 staggerReveal('.work-grid', 100);
